@@ -1,0 +1,41 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+}
+
+java {
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+apply from: rootProject.file('gradle/dependencies.gradle')
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation libraries.scala
+    implementation libraries.spark_core
+    implementation libraries.spark_sql
+    implementation libraries.spark_streaming
+
+    testImplementation libraries.jupiter
+    testRuntimeOnly libraries.jupiter_engine
+
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'Spark.Examples.App'
+}
+
+test {
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+}
