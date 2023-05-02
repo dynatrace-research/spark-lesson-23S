@@ -1,6 +1,7 @@
 package com.dynatrace.spark.exercise;
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
 import java.util.List;
@@ -15,8 +16,11 @@ public class Exercise1 {
         JavaSparkContext jContext = new JavaSparkContext(conf);
         jContext.setLogLevel("ERROR");
 
-        // TODO
         List<Integer> items = IntStream.range(0, 100).boxed().collect(Collectors.toList());
+        JavaRDD<Integer> rdd = jContext.parallelize(items)
+                .filter(x -> x % 5 == 0)
+                .map(x -> x * x);
+        System.out.println(rdd.collect());
 
         jContext.close();
     }
