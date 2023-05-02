@@ -35,7 +35,7 @@ public class StreamingExample {
 
         // output result
         StreamingQuery streamingQuery = words.writeStream()
-                .outputMode("complete")
+                .outputMode("append")
                 .format("console")
                 .start();
 

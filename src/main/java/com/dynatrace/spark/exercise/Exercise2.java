@@ -19,6 +19,13 @@ public class Exercise2 {
         sparkSession.sparkContext().setLogLevel("ERROR");
 
         Dataset<Long> ds = sparkSession.range(100);
+
+        // // alternative solution
+        //        ds.createOrReplaceTempView("data");
+        //        Dataset<Row> result = sparkSession.sql(
+        //                "SELECT id as value, (id * id) as x2 FROM data WHERE id % 3 == 0");
+        //        result.show();
+
         Dataset<Row> result = ds
                 .filter(col(ID).mod(3).equalTo(0))
                 .select(col(ID), pow(col(ID), 2).cast("int").as(X2));
